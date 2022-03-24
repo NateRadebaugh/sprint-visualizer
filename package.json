@@ -1,0 +1,22 @@
+{
+  "name": "sprint-visualizer",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "next",
+    "build": "next build"
+  },
+  "author": "Nate Radebaugh",
+  "dependencies": {
+    "@excalidraw/excalidraw": "^0.11.0",
+    "bootstrap": "^4.6.1",
+    "next": "^12.1.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.21",
+    "@types/react": "^17.0.40",
+    "typescript": "^4.6.2"
+  }
+}
