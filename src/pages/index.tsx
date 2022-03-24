@@ -26,9 +26,13 @@ prod:
   const excalidrawRef = useRef<ExcalidrawImperativeAPI>(null);
   const [theme, setTheme] = useState("light");
 
-  useEffect(() => {
-    window.location.hash = encodeURIComponent(text);
+  const fullHash = useMemo(() => {
+    return encodeURIComponent(text);
   }, [text]);
+
+  useEffect(() => {
+    window.location.hash = fullHash;
+  }, [fullHash]);
 
   const data = useMemo(() => {
     const parsedConfig = parseConfig(text);
@@ -46,6 +50,18 @@ prod:
 
   return (
     <div className="container-fluid">
+      <div className="d-none d-xl-flex align-items-center">
+        <label htmlFor="primaryColor" className="mb-0 mr-2 font-weight-bold">
+          URL:
+        </label>
+        <input
+          type="text"
+          className="w-100 form-control mb-1"
+          disabled
+          value={`${window.location.origin}/#${fullHash}`}
+        />
+      </div>
+
       <div className="row">
         <div className="d-none d-xl-block col-xl-2 pr-0">
           <textarea
