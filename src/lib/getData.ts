@@ -1,6 +1,7 @@
 import { ExcalidrawElement } from "@excalidraw/excalidraw/types/element/types";
 import { getHeaderElements } from "./getHeaderElements";
 import { getSprintElements } from "./getSprintElements";
+import { ThemeColors } from "./parseConfig";
 
 export interface DataColumn {
   label: string[];
@@ -8,6 +9,7 @@ export interface DataColumn {
 }
 interface GetDataOptions {
   columns?: DataColumn[];
+  themeColors: ThemeColors
 }
 
 const offsets = {
@@ -15,7 +17,7 @@ const offsets = {
   y: 12,
 };
 
-export default function getData({ columns }: GetDataOptions): {
+export default function getData({ columns, themeColors }: GetDataOptions): {
   elements?: readonly ExcalidrawElement[] | null | undefined;
 } {
   const numColumns = columns?.length ?? 0;
@@ -158,6 +160,7 @@ export default function getData({ columns }: GetDataOptions): {
               x: offsets.x + 25 + i * (columnWidth + 1),
               y: offsets.y + 52 + j * 56,
               width: columnWidth - 40,
+              themeColors: themeColors
             })
           );
         }

@@ -1,4 +1,5 @@
 import { ExcalidrawElement } from "@excalidraw/excalidraw/types/element/types";
+import { ThemeColors } from "./parseConfig";
 
 let i = 0;
 function getId() {
@@ -8,10 +9,12 @@ function getId() {
 export function getSprintElements(
   label: string,
   isInProgress: boolean,
-  options: { x: number; y: number, width: number, }
+  options: { x: number; y: number, width: number, themeColors: ThemeColors }
 ) {
   const id = getId();
   const sprintElements: ExcalidrawElement[] = [];
+
+  const { themeColors } = options;
 
   const isBacklog = label.toLowerCase() === "backlog";
   sprintElements.push(
@@ -47,7 +50,7 @@ export function getSprintElements(
       ],
       updated: 1647541200814,
       link: null,
-      backgroundColor: isBacklog ? "#d5f0f8" : "#15aabf",
+      backgroundColor: isBacklog ? themeColors.lighterPrimaryColor : themeColors.primaryColor,
     },
     {
       type: "text",
@@ -61,8 +64,8 @@ export function getSprintElements(
       roughness: 0,
       opacity: 100,
       angle: 0,
-      strokeColor: "#000000",
-      backgroundColor: isBacklog ? "#d5f0f8" : "#15aabf",
+      strokeColor: isBacklog ? "#000" : "#fff",
+      backgroundColor: "transparent",
       height: 18,
       seed: 507846114,
       groupIds: ["1X9ScPxWPEYwGHYm3H63c" + id, "0ACwpDE8wKq4ML2TutE9r" + id],

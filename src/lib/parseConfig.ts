@@ -1,6 +1,15 @@
 import { DataColumn } from "./getData";
+import pSBC from "./pSBC";
 
-export default function parseConfig(text: string): { columns: DataColumn[] } {
+export interface ThemeColors {
+  primaryColor: string;
+  lighterPrimaryColor: string;
+}
+
+export default function parseConfig(
+  text: string,
+  primaryColor: string
+): { columns: DataColumn[]; themeColors: ThemeColors } {
   const parts = text.trim().split(/(.+\s?.*):/gm);
   const columns: DataColumn[] = [];
 
@@ -29,5 +38,8 @@ export default function parseConfig(text: string): { columns: DataColumn[] } {
     }
   }
 
-  return { columns };
+  return {
+    columns,
+    themeColors: { primaryColor, lighterPrimaryColor: pSBC(0.7, primaryColor) },
+  };
 }

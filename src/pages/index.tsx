@@ -1,14 +1,24 @@
 import { useState, useRef, useEffect, useMemo } from "react";
 import getData from "../lib/getData";
 import { ExcalidrawImperativeAPI } from "@excalidraw/excalidraw/types/types";
-
-import "bootstrap/dist/css/bootstrap.min.css";
 import parseConfig from "../lib/parseConfig";
 
+import "bootstrap/dist/css/bootstrap.min.css";
+
 function Page() {
-  let hash = decodeURIComponent(window.location.hash.replace(/^#/, ""));
+  let gotHash = decodeURIComponent(window.location.hash.replace(/^#/, ""));
+
+  const gotHashParts: {
+    primaryColor: string;
+    text: string;
+  } = gotHash ? JSON.parse(gotHash) : {};
+  
+  const [primaryColor, setPrimaryColor] = useState(
+    gotHashParts.primaryColor || "#15aabf"
+  );
+
   const [text, setText] = useState(
-    hash ||
+    gotHashParts.text ||
       `Backlog:
 backlog
 
@@ -27,17 +37,19 @@ prod:
   const [theme, setTheme] = useState("light");
 
   const fullHash = useMemo(() => {
-    return encodeURIComponent(text);
-  }, [text]);
+    return encodeURIComponent(
+      JSON.stringify({ primaryColor: primaryColor, text: text })
+    );
+  }, [primaryColor, text]);
 
   useEffect(() => {
     window.location.hash = fullHash;
   }, [fullHash]);
 
   const data = useMemo(() => {
-    const parsedConfig = parseConfig(text);
+    const parsedConfig = parseConfig(text, primaryColor);
     return getData(parsedConfig);
-  }, [text]);
+  }, [primaryColor, text]);
 
   useEffect(() => {
     excalidrawRef.current?.updateScene(data);
@@ -64,6 +76,20 @@ prod:
 
       <div className="row">
         <div className="d-none d-xl-block col-xl-2 pr-0">
+          <div className="d-flex align-items-center">
+            <label
+              htmlFor="primaryColor"
+              className="mb-0 mr-2 font-weight-bold"
+            >
+              Theme:
+            </label>
+            <input
+              type="color"
+              id="primaryColor"
+              value={primaryColor}
+              onChange={(e) => setPrimaryColor(e.target.value)}
+            />
+          </div>
           <textarea
             className="form-control h-100 rounded-0"
             value={text}
