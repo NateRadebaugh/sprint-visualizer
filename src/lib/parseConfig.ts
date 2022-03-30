@@ -4,12 +4,22 @@ import pSBC from "./pSBC";
 export interface ThemeColors {
   primaryColor: string;
   lighterPrimaryColor: string;
+  currentBackgroundColor: string;
+  currentTextColor: string;
+  prevBackgroundColor: string;
+  prevTextColor: string;
+}
+
+export interface DataConfig {
+  columns: DataColumn[];
+  themeColors: ThemeColors;
+  allSprints: DataColumn['sprints'];
 }
 
 export default function parseConfig(
   text: string,
-  primaryColor: string
-): { columns: DataColumn[]; themeColors: ThemeColors } {
+  primaryColor: string,
+): DataConfig {
   const parts = text.trim().split(/(.+\s?.*):/gm);
   const columns: DataColumn[] = [];
 
@@ -38,8 +48,23 @@ export default function parseConfig(
     }
   }
 
+  const allSprints = columns.reduce((prev, curr) => {
+    if (curr?.sprints) {
+      prev.push(...curr.sprints);
+    }
+    return prev;
+  }, []);
+
   return {
     columns,
-    themeColors: { primaryColor, lighterPrimaryColor: pSBC(0.7, primaryColor) },
+    themeColors: {
+      primaryColor,
+      lighterPrimaryColor: pSBC(0.7, primaryColor),
+      currentBackgroundColor: "#ecfdf5",
+      currentTextColor: "#064e3b",
+      prevBackgroundColor: "#fff7ed",
+      prevTextColor: "#7c2d12",
+    },
+    allSprints,
   };
 }
