@@ -1,20 +1,33 @@
-import { useState, useRef, useEffect, useMemo } from "react";
-import getData from "../lib/getData";
-import { ExcalidrawImperativeAPI } from "@excalidraw/excalidraw/types/types";
-import parseConfig from "../lib/parseConfig";
-
+import { DateTime } from "@nateradebaugh/react-datetime";
+import "@nateradebaugh/react-datetime/dist/css/styles.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import format from "date-fns/format";
+import isWeekend from "date-fns/isWeekend";
+import parse from "date-fns/parse";
+import { useEffect, useMemo, useState } from "react";
 
 function Page() {
   let gotHash = decodeURIComponent(window.location.hash.replace(/^#/, ""));
 
   const gotHashParts: {
-    primaryColor: string;
-    text: string;
+    primaryColor?: string;
+    startDate?: string;
+    startSprint?: string;
+    weekdaysPerSprint?: string;
+    text?: string;
   } = gotHash ? JSON.parse(gotHash) : {};
-  
+
   const [primaryColor, setPrimaryColor] = useState(
     gotHashParts.primaryColor || "#15aabf"
+  );
+  const [startDate, setStartDate] = useState<
+    string | number | Date | undefined
+  >(gotHashParts.startDate || new Date());
+  const [startSprint, setStartSprint] = useState<string | number | undefined>(
+    gotHashParts.startSprint
+  );
+  const [weekdaysPerSprint, setWeekdaysPerSprint] = useState<string>(
+    gotHashParts.weekdaysPerSprint || "10"
   );
 
   const [text, setText] = useState(
@@ -33,32 +46,30 @@ uat:
 prod:
 `
   );
-  const excalidrawRef = useRef<ExcalidrawImperativeAPI>(null);
-  const [theme, setTheme] = useState("light");
+
+  const formattedStartDate = useMemo(() => {
+    const startDateDate =
+      typeof startDate === "string"
+        ? parse(startDate, "yyyy-MM-dd", new Date())
+        : startDate;
+    return startDateDate ? format(startDateDate, "yyyy-MM-dd") : "";
+  }, [startDate]);
 
   const fullHash = useMemo(() => {
     return encodeURIComponent(
-      JSON.stringify({ primaryColor: primaryColor, text: text })
+      JSON.stringify({
+        primaryColor: primaryColor,
+        startDate: formattedStartDate,
+        startSprint: startSprint,
+        weekdaysPerSprint,
+        text,
+      })
     );
-  }, [primaryColor, text]);
+  }, [primaryColor, formattedStartDate, startSprint, weekdaysPerSprint, text]);
 
   useEffect(() => {
     window.location.hash = fullHash;
   }, [fullHash]);
-
-  const data = useMemo(() => {
-    const parsedConfig = parseConfig(text, primaryColor);
-    return getData(parsedConfig);
-  }, [primaryColor, text]);
-
-  useEffect(() => {
-    excalidrawRef.current?.updateScene(data);
-  }, [data]);
-
-  const [Excalidraw, setComp] = useState(null);
-  useEffect(() => {
-    import("@excalidraw/excalidraw").then((comp) => setComp(comp.default));
-  }, []);
 
   return (
     <div className="container-fluid">
@@ -75,7 +86,7 @@ prod:
       </div>
 
       <div className="row">
-        <div className="d-none d-xl-block col-xl-2 pr-0">
+        <div className="d-none d-xl-block col-xl-4 pr-0">
           <div className="d-flex align-items-center">
             <label
               htmlFor="primaryColor"
@@ -90,24 +101,64 @@ prod:
               onChange={(e) => setPrimaryColor(e.target.value)}
             />
           </div>
+          <div className="d-flex align-items-center">
+            <label htmlFor="startDate" className="mb-0 mr-2 font-weight-bold">
+              Start Date:
+            </label>
+            <DateTime
+              id="startDate"
+              value={startDate}
+              onChange={(e) => setStartDate(e)}
+              isValidDate={(e) => !isWeekend(e)}
+              dateFormat="yyyy-MM-dd"
+              timeFormat={false}
+            />
+          </div>
+          <div className="d-flex align-items-center">
+            <label htmlFor="startsprint" className="mb-0 mr-2 font-weight-bold">
+              Start Sprint Label:
+            </label>
+            <input
+              id="startsprint"
+              type="text"
+              value={startSprint}
+              onChange={(e) => setStartSprint(e.target.value)}
+            />
+          </div>
+          <div className="d-flex align-items-center">
+            <label
+              htmlFor="weekdayspersprint"
+              className="mb-0 mr-2 font-weight-bold"
+            >
+              Weekdays Per Sprint:
+            </label>
+            <input
+              id="weekdayspersprint"
+              type="number"
+              min={1}
+              value={weekdaysPerSprint}
+              onChange={(e) => setWeekdaysPerSprint(e.target.value)}
+            />
+          </div>
           <textarea
             className="form-control h-100 rounded-0"
             value={text}
             onChange={(e) => setText(e.target.value)}
           ></textarea>
         </div>
-        <div className="col-xl-10" style={{ height: "500px" }}>
-          {Excalidraw && (
-            <Excalidraw
-              ref={excalidrawRef}
-              initialData={data}
-              viewModeEnabled={true}
-              zenModeEnabled={true}
-              theme={theme}
-              name="Custom name of drawing"
-              UIOptions={{ canvasActions: { loadScene: false } }}
-            />
-          )}
+        <div className="col-xl-8" style={{ height: "500px" }}>
+          <iframe
+            src={`/content?primaryColor=${encodeURIComponent(
+              primaryColor
+            )}&startDate=${encodeURIComponent(
+              `${formattedStartDate}`
+            )}&startSprint=${encodeURIComponent(
+              `${startSprint}`
+            )}&weekdaysPerSprint=${encodeURIComponent(
+              weekdaysPerSprint
+            )}&text=${encodeURIComponent(text)}`}
+            className="w-100 h-100 border-0"
+          />
         </div>
       </div>
     </div>

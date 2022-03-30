@@ -1,0 +1,46 @@
+@import "./variables";
+@import "bootstrap/scss/bootstrap";
+
+blockquote {
+  padding-left: 8px;
+  border-radius: 8px;
+
+  background-color: $primary;
+
+  margin-bottom: 4px;
+  margin-top: 4px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+
+  code {
+    color: inherit !important;
+  }
+}
+
+ol,
+ul,
+dl {
+  margin-bottom: 0;
+}
+
+*[class$="-sprint"] {
+  border-radius: 6px;
+  padding-left: 3px;
+  padding-bottom: 2px;
+  padding-right: 3px;
+  margin-bottom: -2px;
+
+  code {
+    color: inherit !important;
+  }
+}
+
+.prev-sprint {
+  background-color: #fff7ed;
+  color: #7c2d12;
+}
+
+.current-sprint {
+  background-color: #ecfdf5;
+  color: #064e3b;
+}

@@ -7,17 +7,25 @@ export interface DataColumn {
   label: string[];
   sprints?: string[];
 }
-interface GetDataOptions {
-  columns?: DataColumn[];
-  themeColors: ThemeColors
-}
 
 const offsets = {
   x: 1,
   y: 12,
 };
 
-export default function getData({ columns, themeColors }: GetDataOptions): {
+export interface GetDataOptions {
+  columns: DataColumn[],
+  themeColors: ThemeColors,
+  currentSprintLabel: string | undefined,
+  prevSprintLabel: string | undefined
+}
+
+export default function getData({
+  columns,
+  themeColors,
+  currentSprintLabel,
+  prevSprintLabel,
+}: GetDataOptions): {
   elements?: readonly ExcalidrawElement[] | null | undefined;
 } {
   const numColumns = columns?.length ?? 0;
@@ -160,7 +168,9 @@ export default function getData({ columns, themeColors }: GetDataOptions): {
               x: offsets.x + 25 + i * (columnWidth + 1),
               y: offsets.y + 52 + j * 56,
               width: columnWidth - 40,
-              themeColors: themeColors
+              themeColors: themeColors,
+              currentSprintLabel,
+              prevSprintLabel,
             })
           );
         }

@@ -1,4 +1,5 @@
 import { ExcalidrawElement } from "@excalidraw/excalidraw/types/element/types";
+import getSprintColors from "./getSprintColors";
 import { ThemeColors } from "./parseConfig";
 
 let i = 0;
@@ -9,12 +10,25 @@ function getId() {
 export function getSprintElements(
   label: string,
   isInProgress: boolean,
-  options: { x: number; y: number, width: number, themeColors: ThemeColors }
+  options: {
+    x: number;
+    y: number;
+    width: number;
+    themeColors: ThemeColors;
+    currentSprintLabel: string | undefined;
+    prevSprintLabel: string | undefined;
+  }
 ) {
   const id = getId();
   const sprintElements: ExcalidrawElement[] = [];
 
-  const { themeColors } = options;
+  const sprintColors = getSprintColors(
+    label,
+    isInProgress,
+    options.themeColors,
+    options.currentSprintLabel,
+    options.prevSprintLabel
+  );
 
   const isBacklog = label.toLowerCase() === "backlog";
   sprintElements.push(
@@ -33,7 +47,7 @@ export function getSprintElements(
       x: options.x - 4,
       y: options.y - 11,
       width: options.width,
-      strokeColor: "#000000",
+      strokeColor: sprintColors.borderColor,
       height: isBacklog ? 100 : 44,
       seed: 1776908542,
       groupIds: ["1X9ScPxWPEYwGHYm3H63c" + id, "0ACwpDE8wKq4ML2TutE9r" + id],
@@ -50,7 +64,7 @@ export function getSprintElements(
       ],
       updated: 1647541200814,
       link: null,
-      backgroundColor: isBacklog ? themeColors.lighterPrimaryColor : themeColors.primaryColor,
+      backgroundColor: sprintColors.backgroundColor,
     },
     {
       type: "text",
@@ -64,7 +78,7 @@ export function getSprintElements(
       roughness: 0,
       opacity: 100,
       angle: 0,
-      strokeColor: isBacklog ? "#000" : "#fff",
+      strokeColor: sprintColors.textColor,
       backgroundColor: "transparent",
       height: 18,
       seed: 507846114,
@@ -77,11 +91,13 @@ export function getSprintElements(
       fontFamily: 2,
       text: label,
       baseline: 14,
-      textAlign: "left",
+      textAlign: "center",
       verticalAlign: "top",
       containerId: null,
       originalText: label,
-      ...options,
+      width: options.width,
+      x: options.x - 6,
+      y: options.y + 2,
     }
   );
 
@@ -101,7 +117,7 @@ export function getSprintElements(
         angle: 0,
         x: options.x + 3,
         y: options.y + 33,
-        strokeColor: "#000000",
+        strokeColor: sprintColors.borderColor,
         backgroundColor: "transparent",
         width: 4.814814814814895,
         height: 4.814814814814895,
@@ -126,7 +142,7 @@ export function getSprintElements(
         angle: 0,
         x: options.x + 8,
         y: options.y + 33,
-        strokeColor: "#000000",
+        strokeColor: sprintColors.borderColor,
         backgroundColor: "transparent",
         width: 4.814814814814895,
         height: 4.814814814814895,
@@ -151,7 +167,7 @@ export function getSprintElements(
         angle: 0,
         x: options.x - 7,
         y: options.y + 33,
-        strokeColor: "#000000",
+        strokeColor: sprintColors.borderColor,
         backgroundColor: "transparent",
         width: options.width + 7,
         height: 0,
@@ -185,7 +201,7 @@ export function getSprintElements(
         angle: 0,
         x: options.x + options.width - 20,
         y: options.y + 33,
-        strokeColor: "#000000",
+        strokeColor: sprintColors.borderColor,
         backgroundColor: "transparent",
         width: 4.814814814814895,
         height: 4.814814814814895,
@@ -210,7 +226,7 @@ export function getSprintElements(
         angle: 0,
         x: options.x + options.width - 15,
         y: options.y + 33,
-        strokeColor: "#000000",
+        strokeColor: sprintColors.borderColor,
         backgroundColor: "transparent",
         width: 4.814814814814895,
         height: 4.814814814814895,
