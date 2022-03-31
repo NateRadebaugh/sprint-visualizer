@@ -2,6 +2,8 @@ import { DateTime } from "@nateradebaugh/react-datetime";
 import "@nateradebaugh/react-datetime/dist/css/styles.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import format from "date-fns/format";
+import isDate from "date-fns/isDate";
+import isValid from "date-fns/isValid";
 import isWeekend from "date-fns/isWeekend";
 import parse from "date-fns/parse";
 import { useEffect, useMemo, useState } from "react";
@@ -22,7 +24,7 @@ function Page() {
   );
   const [startDate, setStartDate] = useState<
     string | number | Date | undefined
-  >(gotHashParts.startDate || new Date());
+  >(gotHashParts.startDate || undefined);
   const [startSprint, setStartSprint] = useState<string | number | undefined>(
     gotHashParts.startSprint
   );
@@ -49,10 +51,14 @@ prod:
 
   const formattedStartDate = useMemo(() => {
     const startDateDate =
-      typeof startDate === "string"
+      startDate && typeof startDate === "string"
         ? parse(startDate, "yyyy-MM-dd", new Date())
-        : startDate;
-    return startDateDate ? format(startDateDate, "yyyy-MM-dd") : "";
+        : isDate(startDate) && isValid(startDate)
+        ? (startDate as Date)
+        : undefined;
+    return startDateDate && isValid(startDateDate)
+      ? format(startDateDate, "yyyy-MM-dd")
+      : "";
   }, [startDate]);
 
   const fullHash = useMemo(() => {
