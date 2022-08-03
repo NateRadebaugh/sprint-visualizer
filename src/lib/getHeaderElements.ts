@@ -45,6 +45,7 @@ export function getHeaderElements(
         [0, 0],
         [0, 30],
       ],
+      locked: true,
     },
     {
       type: "text",
@@ -78,6 +79,7 @@ export function getHeaderElements(
       verticalAlign: "top",
       containerId: null,
       originalText: Array.isArray(label) ? label.join("\n") : label,
+      locked: true,
     },
   ];
 }
