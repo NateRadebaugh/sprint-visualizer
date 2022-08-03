@@ -54,7 +54,8 @@ export function Content() {
 
   const [Excalidraw, setComp] = useState(null);
   useEffect(() => {
-    import("@excalidraw/excalidraw").then((comp) => setComp(comp.default));
+    console.log("render thingy")
+    import("@excalidraw/excalidraw").then(({Excalidraw}) => setComp(Excalidraw));
   }, []);
 
   return (
