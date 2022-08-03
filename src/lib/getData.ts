@@ -72,6 +72,7 @@ export default function getData({
       baseline: 18,
       containerId: null,
       originalText: "Sprint Snapshot",
+      locked: true,
     },
 
     // Long line for header row
@@ -108,6 +109,7 @@ export default function getData({
         [0, 0],
         [numColumns * columnWidth, 0],
       ],
+      locked: true,
     },
 
     // Rightmost header line
@@ -144,6 +146,7 @@ export default function getData({
         [0, 0],
         [0, 30],
       ],
+      locked: true,
     },
   ];
 

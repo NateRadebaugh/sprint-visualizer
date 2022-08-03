@@ -65,6 +65,7 @@ export function getSprintElements(
       updated: 1647541200814,
       link: null,
       backgroundColor: sprintColors.backgroundColor,
+      locked: true,
     },
     {
       type: "text",
@@ -98,6 +99,7 @@ export function getSprintElements(
       width: options.width,
       x: options.x - 6,
       y: options.y + 2,
+      locked: true,
     }
   );
 
@@ -127,6 +129,7 @@ export function getSprintElements(
         boundElements: [],
         updated: 1647541200814,
         link: null,
+        locked: true,
       },
       {
         type: "ellipse",
@@ -152,6 +155,7 @@ export function getSprintElements(
         boundElements: [],
         updated: 1647541200814,
         link: null,
+        locked: true,
       },
       {
         type: "line",
@@ -186,6 +190,7 @@ export function getSprintElements(
           [0, 0],
           [options.width + 7, 0],
         ],
+        locked: true,
       },
       {
         type: "ellipse",
@@ -211,6 +216,7 @@ export function getSprintElements(
         boundElements: [],
         updated: 1647541200814,
         link: null,
+        locked: true,
       },
       {
         type: "ellipse",
@@ -236,6 +242,7 @@ export function getSprintElements(
         boundElements: [],
         updated: 1647541200814,
         link: null,
+        locked: true,
       }
     );
   }
