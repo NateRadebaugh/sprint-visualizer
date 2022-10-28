@@ -35,12 +35,13 @@ export function Content() {
 
       const { allSprints } = parsedConfig;
 
-      const { currentSprintLabel, prevSprintLabel } = getRelativeSprintLabels(
-        allSprints,
-        startDate,
-        startSprint,
-        weekdaysPerSprint
-      ) ?? {};
+      const { currentSprintLabel, prevSprintLabel } =
+        getRelativeSprintLabels(
+          allSprints,
+          startDate,
+          startSprint,
+          weekdaysPerSprint
+        ) ?? {};
 
       return getData({ ...parsedConfig, currentSprintLabel, prevSprintLabel });
     }
@@ -54,12 +55,19 @@ export function Content() {
 
   const [Excalidraw, setComp] = useState(null);
   useEffect(() => {
-    console.log("render thingy")
-    import("@excalidraw/excalidraw").then(({Excalidraw}) => setComp(Excalidraw));
+    import("@excalidraw/excalidraw").then(({ Excalidraw }) =>
+      setComp(Excalidraw)
+    );
   }, []);
 
   return (
-    <div style={{ height: "100vh", width: "100vw" }}>
+    <div
+      style={{ height: "100vh", width: "100vw" }}
+      onWheelCapture={(e) => {
+        // Stop Excalidraw from hijacking scroll
+        e.stopPropagation();
+      }}
+    >
       {Boolean(Excalidraw && data) && (
         <Excalidraw
           ref={excalidrawRef}
