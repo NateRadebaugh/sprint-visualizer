@@ -1,3 +1,5 @@
+"use client";
+
 import { DateTime } from "@nateradebaugh/react-datetime";
 import "@nateradebaugh/react-datetime/dist/css/styles.css";
 import "bootstrap/dist/css/bootstrap.min.css";

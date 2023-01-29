@@ -1,21 +1,23 @@
+"use client";
+
+import { Excalidraw } from "@excalidraw/excalidraw";
 import { ExcalidrawImperativeAPI } from "@excalidraw/excalidraw/types/types";
 import isValid from "date-fns/isValid";
 import parse from "date-fns/parse";
-import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
-import getData from "../lib/getData";
-import getRelativeSprintLabels from "../lib/getRelativetSprintLabels";
-import parseConfig from "../lib/parseConfig";
+import getData from "../../lib/getData";
+import getRelativeSprintLabels from "../../lib/getRelativetSprintLabels";
+import parseConfig from "../../lib/parseConfig";
 
 export function Content() {
-  const { query } = useRouter();
-  const {
-    primaryColor: rawPrimaryColor,
-    startDate: rawStartDate,
-    startSprint: rawStartSprint,
-    weekdaysPerSprint: rawWeekdaysPerSprint,
-    text,
-  } = query;
+  const searchParams = useSearchParams();
+  const rawPrimaryColor = searchParams.get("primaryColor");
+  const rawStartDate = searchParams.get("startDate");
+  const rawStartSprint = searchParams.get("startSprint");
+  const rawWeekdaysPerSprint = searchParams.get("weekdaysPerSprint");
+  const text = searchParams.get("text");
+
   const primaryColor = rawPrimaryColor || "#ffc107";
   const parsedDate = parse(`${rawStartDate}`, "yyyy-MM-dd", new Date());
   const startDate =
@@ -50,15 +52,10 @@ export function Content() {
   }, [primaryColor, startDate, startSprint, text, weekdaysPerSprint]);
 
   useEffect(() => {
-    excalidrawRef.current?.updateScene(data);
+    if (data) {
+      excalidrawRef.current?.updateScene(data);
+    }
   }, [data]);
-
-  const [Excalidraw, setComp] = useState(null);
-  useEffect(() => {
-    import("@excalidraw/excalidraw").then(({ Excalidraw }) =>
-      setComp(Excalidraw)
-    );
-  }, []);
 
   return (
     <div
@@ -68,7 +65,7 @@ export function Content() {
         e.stopPropagation();
       }}
     >
-      {Boolean(Excalidraw && data) && (
+      {Boolean(data) && (
         <Excalidraw
           ref={excalidrawRef}
           initialData={data}
