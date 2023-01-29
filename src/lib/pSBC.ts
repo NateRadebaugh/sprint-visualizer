@@ -19,7 +19,7 @@ const pSBC = (percentage: number, fromColor: string, toColor?: string, shouldUse
   )
     return null;
   (h = fromColor.length > 9),
-    (h = a ? (toColor.length > 9 ? true : toColor == "c" ? !h : false) : h),
+    (h = a ? (toColor !== undefined && toColor.length > 9 ? true : toColor == "c" ? !h : false) : h),
     (f = pSBC.pSBCr(fromColor)),
     (P = percentage < 0),
     (t =
@@ -64,7 +64,7 @@ const pSBC = (percentage: number, fromColor: string, toColor?: string, shouldUse
     );
 };
 
-pSBC.pSBCr = (d) => {
+pSBC.pSBCr = (d: any) => {
   const i = parseInt;
   let n = d.length,
     x: Record<string, number> = {};

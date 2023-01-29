@@ -53,13 +53,13 @@ export default function parseConfig(
       prev.push(...curr.sprints);
     }
     return prev;
-  }, []);
+  }, [] as string[]);
 
   return {
     columns,
     themeColors: {
       primaryColor,
-      lighterPrimaryColor: pSBC(0.7, primaryColor),
+      lighterPrimaryColor: pSBC(0.7, primaryColor) ?? 'blue',
       currentBackgroundColor: "#ecfdf5",
       currentTextColor: "#064e3b",
       prevBackgroundColor: "#fff7ed",

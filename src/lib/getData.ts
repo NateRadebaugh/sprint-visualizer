@@ -5,7 +5,7 @@ import { ThemeColors } from "./parseConfig";
 
 export interface DataColumn {
   label: string[];
-  sprints?: string[];
+  sprints: string[];
 }
 
 const offsets = {
@@ -14,10 +14,10 @@ const offsets = {
 };
 
 export interface GetDataOptions {
-  columns: DataColumn[],
-  themeColors: ThemeColors,
-  currentSprintLabel: string | undefined,
-  prevSprintLabel: string | undefined
+  columns: DataColumn[];
+  themeColors: ThemeColors;
+  currentSprintLabel: string | undefined;
+  prevSprintLabel: string | undefined;
 }
 
 export default function getData({
@@ -33,7 +33,7 @@ export default function getData({
     ...columns.map((x) =>
       Math.max(
         ...x.label.map((y) => y.length),
-        ...x.sprints.map((z) => z.length + 3.5)
+        ...(x.sprints?.map((z) => z.length + 3.5) ?? [])
       )
     )
   );
@@ -56,7 +56,7 @@ export default function getData({
       roughness: 1,
       opacity: 100,
       groupIds: [],
-      strokeSharpness: "sharp",
+      roundness: null,
       seed: 1988191759,
       version: 17,
       versionNonce: 809445135,
@@ -96,7 +96,7 @@ export default function getData({
       height: 0,
       seed: 1578930530,
       groupIds: [],
-      strokeSharpness: "round",
+      roundness: null,
       boundElements: [],
       updated: 1647541200813,
       link: null,
@@ -133,7 +133,7 @@ export default function getData({
       height: 30,
       seed: 213462462,
       groupIds: [],
-      strokeSharpness: "round",
+      roundness: null,
       boundElements: [],
       updated: 1647541200813,
       link: null,
