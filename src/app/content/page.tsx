@@ -1,6 +1,6 @@
 "use client";
 
-import { Excalidraw } from "@excalidraw/excalidraw";
+import { Excalidraw as RawExcalidraw } from "@excalidraw/excalidraw";
 import { ExcalidrawImperativeAPI } from "@excalidraw/excalidraw/types/types";
 import isValid from "date-fns/isValid";
 import parse from "date-fns/parse";
@@ -57,6 +57,13 @@ export function Content() {
     }
   }, [data]);
 
+  const [Excalidraw, setComp] = useState<typeof RawExcalidraw | null>(null);
+  useEffect(() => {
+    import("@excalidraw/excalidraw").then(({ Excalidraw }) =>
+      setComp(Excalidraw)
+    );
+  }, []);
+
   return (
     <div
       style={{ height: "100vh", width: "100vw" }}
@@ -65,7 +72,7 @@ export function Content() {
         e.stopPropagation();
       }}
     >
-      {Boolean(data) && (
+      {Excalidraw && data && (
         <Excalidraw
           ref={excalidrawRef}
           initialData={data}
