@@ -5,7 +5,7 @@ import { ThemeColors } from "./parseConfig";
 
 export interface DataColumn {
   label: string[];
-  sprints?: string[];
+  sprints: string[];
 }
 
 const offsets = {
@@ -14,10 +14,10 @@ const offsets = {
 };
 
 export interface GetDataOptions {
-  columns: DataColumn[],
-  themeColors: ThemeColors,
-  currentSprintLabel: string | undefined,
-  prevSprintLabel: string | undefined
+  columns: DataColumn[];
+  themeColors: ThemeColors;
+  currentSprintLabel: string | undefined;
+  prevSprintLabel: string | undefined;
 }
 
 export default function getData({
@@ -33,7 +33,7 @@ export default function getData({
     ...columns.map((x) =>
       Math.max(
         ...x.label.map((y) => y.length),
-        ...x.sprints.map((z) => z.length + 3.5)
+        ...(x.sprints?.map((z) => z.length + 3.5) ?? [])
       )
     )
   );
