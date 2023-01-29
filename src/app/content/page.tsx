@@ -10,7 +10,7 @@ import getData from "../../lib/getData";
 import getRelativeSprintLabels from "../../lib/getRelativetSprintLabels";
 import parseConfig from "../../lib/parseConfig";
 
-export function Content() {
+export default function Content() {
   const searchParams = useSearchParams();
   const rawPrimaryColor = searchParams.get("primaryColor");
   const rawStartDate = searchParams.get("startDate");
@@ -85,17 +85,4 @@ export function Content() {
       )}
     </div>
   );
-}
-
-export default function Page() {
-  const [ready, setReady] = useState(false);
-  useEffect(() => {
-    setReady(true);
-  }, []);
-
-  if (ready) {
-    return <Content />;
-  }
-
-  return null;
 }
