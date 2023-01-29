@@ -1,6 +1,6 @@
 import React from "react";
 
-import "../styles/global.scss";
+import "../../styles/global.scss";
 
 export interface RootLayoutProps {
   children: React.ReactNode;
