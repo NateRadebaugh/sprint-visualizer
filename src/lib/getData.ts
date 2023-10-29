@@ -1,4 +1,5 @@
 import { ExcalidrawElement } from "@excalidraw/excalidraw/types/element/types";
+import { convertToExcalidrawElements } from "@excalidraw/excalidraw";
 import { getHeaderElements } from "./getHeaderElements";
 import { getSprintElements } from "./getSprintElements";
 import { ThemeColors } from "./parseConfig";
@@ -38,7 +39,7 @@ export default function getData({
     )
   );
   const columnWidth = maxColumnLength * 10;
-  const elements: ExcalidrawElement[] = [
+  const elements: ExcalidrawElement[] = convertToExcalidrawElements([
     // Header
     {
       id: "it5t6bjL2Y_Zhmnu5I3Nw",
@@ -148,7 +149,7 @@ export default function getData({
       ],
       locked: true,
     },
-  ];
+  ]);
 
   if (columns) {
     for (let i = 0; i < numColumns; i++) {
