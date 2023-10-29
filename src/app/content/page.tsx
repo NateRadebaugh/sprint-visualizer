@@ -80,7 +80,6 @@ export default function Content() {
           zenModeEnabled={true}
           theme="light"
           name="Sprint Snapshot"
-          UIOptions={{ canvasActions: { loadScene: false } }}
         />
       )}
     </div>

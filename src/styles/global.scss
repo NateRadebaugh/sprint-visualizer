@@ -44,3 +44,10 @@ dl {
   background-color: #ecfdf5;
   color: #064e3b;
 }
+
+.excalidraw {
+  .App-menu.App-menu_top,
+  .App-menu.App-menu_bottom {
+    display: none;
+  }
+}
