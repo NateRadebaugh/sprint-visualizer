@@ -154,7 +154,7 @@ prod:
             onChange={(e) => setText(e.target.value)}
           ></textarea>
         </div>
-        <div className="col-xl-8" style={{ height: "500px" }}>
+        <div className="col-xl-8" style={{ marginTop: "34px", height: "500px" }}>
           <iframe
             src={`/content?primaryColor=${encodeURIComponent(
               primaryColor
