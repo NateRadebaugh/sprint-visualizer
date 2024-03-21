@@ -44,3 +44,8 @@ dl {
   background-color: #ecfdf5;
   color: #064e3b;
 }
+
+// Hide excalidraw overlays
+.layer-ui__wrapper {
+  display: none;
+}

@@ -10,7 +10,7 @@
   },
   "author": "Nate Radebaugh",
   "dependencies": {
-    "@excalidraw/excalidraw": "^0.14.2",
+    "@excalidraw/excalidraw": "^0.17.3",
     "@nateradebaugh/react-datetime": "^4.6.0",
     "bootstrap": "^5.3.3",
     "date-fns": "^3.6.0",
