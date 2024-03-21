@@ -8,7 +8,14 @@ import isValid from "date-fns/isValid";
 import parse from "date-fns/parse";
 import dynamic from "next/dynamic";
 import { useSearchParams } from "next/navigation";
-import { ComponentType, RefObject, useEffect, useMemo, useRef } from "react";
+import {
+  ComponentType,
+  RefObject,
+  Suspense,
+  useEffect,
+  useMemo,
+  useRef,
+} from "react";
 import getData from "../../lib/getData";
 import getRelativeSprintLabels from "../../lib/getRelativetSprintLabels";
 import parseConfig from "../../lib/parseConfig";
@@ -22,7 +29,7 @@ const Excalidraw = dynamic(
   ExcalidrawProps & { ref: RefObject<ExcalidrawImperativeAPI> }
 >;
 
-export default function Content() {
+function Content() {
   const searchParams = useSearchParams();
   const rawPrimaryColor = searchParams.get("primaryColor");
   const rawStartDate = searchParams.get("startDate");
@@ -89,5 +96,13 @@ export default function Content() {
         />
       )}
     </div>
+  );
+}
+
+export default function Page() {
+  return (
+    <Suspense>
+      <Content />
+    </Suspense>
   );
 }

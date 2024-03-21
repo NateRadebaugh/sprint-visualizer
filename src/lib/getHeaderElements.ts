@@ -14,6 +14,7 @@ export function getHeaderElements(
   return [
     {
       type: "line",
+      frameId: "1",
       version: 212,
       versionNonce: 1507092222,
       isDeleted: false,
@@ -49,6 +50,8 @@ export function getHeaderElements(
     },
     {
       type: "text",
+      frameId: "1",
+      lineHeight: 1 as any,
       version: 497,
       versionNonce: 503791202,
       isDeleted: false,

@@ -34,6 +34,7 @@ export function getSprintElements(
   sprintElements.push(
     {
       type: "rectangle",
+      frameId: "1",
       version: 1618,
       versionNonce: 958638654,
       isDeleted: false,
@@ -69,6 +70,8 @@ export function getSprintElements(
     },
     {
       type: "text",
+      frameId: "1",
+      lineHeight: 1 as any,
       version: 1294,
       versionNonce: 468820130,
       isDeleted: false,
@@ -107,6 +110,7 @@ export function getSprintElements(
     sprintElements.push(
       {
         type: "ellipse",
+        frameId: "1",
         version: 308,
         versionNonce: 233812606,
         isDeleted: false,
@@ -133,6 +137,7 @@ export function getSprintElements(
       },
       {
         type: "ellipse",
+        frameId: "1",
         version: 339,
         versionNonce: 1341733986,
         isDeleted: false,
@@ -159,6 +164,7 @@ export function getSprintElements(
       },
       {
         type: "line",
+        frameId: "1",
         version: 309,
         versionNonce: 881898174,
         isDeleted: false,
@@ -194,6 +200,7 @@ export function getSprintElements(
       },
       {
         type: "ellipse",
+        frameId: "1",
         version: 359,
         versionNonce: 538402850,
         isDeleted: false,
@@ -220,6 +227,7 @@ export function getSprintElements(
       },
       {
         type: "ellipse",
+        frameId: "1",
         version: 390,
         versionNonce: 396864254,
         isDeleted: false,

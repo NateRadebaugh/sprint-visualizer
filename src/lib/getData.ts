@@ -42,6 +42,8 @@ export default function getData({
     // Header
     {
       id: "it5t6bjL2Y_Zhmnu5I3Nw",
+      frameId: "1",
+      lineHeight: 1 as any,
       type: "text",
       x: 0,
       y: 0,
@@ -77,6 +79,7 @@ export default function getData({
 
     // Long line for header row
     {
+      frameId: "1",
       type: "line",
       version: 379,
       versionNonce: 796189730,
@@ -115,6 +118,7 @@ export default function getData({
     // Rightmost header line
     {
       type: "line",
+      frameId: "1",
       version: 212,
       versionNonce: 1507092222,
       isDeleted: false,
