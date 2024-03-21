@@ -1,14 +1,26 @@
 "use client";
 
-import { Excalidraw as RawExcalidraw } from "@excalidraw/excalidraw";
-import { ExcalidrawImperativeAPI } from "@excalidraw/excalidraw/types/types";
+import {
+  ExcalidrawImperativeAPI,
+  ExcalidrawProps,
+} from "@excalidraw/excalidraw/types/types";
 import isValid from "date-fns/isValid";
 import parse from "date-fns/parse";
+import dynamic from "next/dynamic";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { ComponentType, RefObject, useEffect, useMemo, useRef } from "react";
 import getData from "../../lib/getData";
 import getRelativeSprintLabels from "../../lib/getRelativetSprintLabels";
 import parseConfig from "../../lib/parseConfig";
+
+const Excalidraw = dynamic(
+  async () => (await import("@excalidraw/excalidraw")).Excalidraw,
+  {
+    ssr: false,
+  }
+) as ComponentType<
+  ExcalidrawProps & { ref: RefObject<ExcalidrawImperativeAPI> }
+>;
 
 export default function Content() {
   const searchParams = useSearchParams();
@@ -56,13 +68,6 @@ export default function Content() {
       excalidrawRef.current?.updateScene(data);
     }
   }, [data]);
-
-  const [Excalidraw, setComp] = useState<typeof RawExcalidraw | null>(null);
-  useEffect(() => {
-    import("@excalidraw/excalidraw").then(({ Excalidraw }) =>
-      setComp(Excalidraw)
-    );
-  }, []);
 
   return (
     <div
